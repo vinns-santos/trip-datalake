@@ -1,4 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
 Description: 'study-datalake
 
   Rest API to manage a Data Lake of study links
@@ -6,20 +7,127 @@ Description: 'study-datalake
   '
 Globals:
   Function:
-    MemorySize: 512
     Timeout: 20
+    MemorySize: 512
+    Environment:
+      Variables:
+        TABLE_NAME:
+          Ref: StudyTable
+        ENDPOINT_OVERRIDE: ''
+Resources:
+  CreateStudyRecordFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://code-serverless-vinni/e50f2d998479c9a3783fb1a8975e14b5
+      Handler: br.com.iwe.handler.CreateStudyRecord::handleRequest
+      Runtime: java8
+      Policies:
+      - DynamoDBCrudPolicy:
+          TableName:
+            Ref: StudyTable
+      Events:
+        CreateStudyRecord:
+          Type: Api
+          Properties:
+            Path: /study
+            Method: post
+  GetStudyRecordsByPeriodFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://code-serverless-vinni/e50f2d998479c9a3783fb1a8975e14b5
+      Handler: br.com.iwe.handler.GetStudyRecordsByPeriod::handleRequest
+      Runtime: java8
+      Policies:
+      - DynamoDBCrudPolicy:
+          TableName:
+            Ref: StudyTable
+      Events:
+        GetStudyRecordsByPeriod:
+          Type: Api
+          Properties:
+            Path: /study/{topic}/findByPeriod
+            Method: get
+            RequestParameters:
+            - method.request.querystring.starts
+            - method.request.querystring.ends
+  GetStudyRecordsByTagFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://code-serverless-vinni/e50f2d998479c9a3783fb1a8975e14b5
+      Handler: br.com.iwe.handler.GetStudyRecordsByTag::handleRequest
+      Runtime: java8
+      Policies:
+      - DynamoDBCrudPolicy:
+          TableName:
+            Ref: StudyTable
+      Events:
+        GetStudyRecordsByTag:
+          Type: Api
+          Properties:
+            Path: /study/{topic}/findByTag
+            Method: get
+            RequestParameters:
+            - method.request.querystring.tag
+  GetStudyRecordsByIsConsumedFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://code-serverless-vinni/e50f2d998479c9a3783fb1a8975e14b5
+      Handler: br.com.iwe.handler.GetStudyRecordsByIsConsumed::handleRequest
+      Runtime: java8
+      Policies:
+      - DynamoDBCrudPolicy:
+          TableName:
+            Ref: StudyTable
+      Events:
+        GetStudyRecordsByIsConsumed:
+          Type: Api
+          Properties:
+            Path: /study/{topic}/findByIsConsumed
+            Method: get
+            RequestParameters:
+            - method.request.querystring.isconsumed
+  StudyTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: study
+      AttributeDefinitions:
+      - AttributeName: topic
+        AttributeType: S
+      - AttributeName: dateTimeCreation
+        AttributeType: S
+      - AttributeName: tag
+        AttributeType: S
+      - AttributeName: consumed
+        AttributeType: S
+      KeySchema:
+      - AttributeName: topic
+        KeyType: HASH
+      - AttributeName: dateTimeCreation
+        KeyType: RANGE
+      LocalSecondaryIndexes:
+      - IndexName: tagIndex
+        KeySchema:
+        - AttributeName: topic
+          KeyType: HASH
+        - AttributeName: tag
+          KeyType: RANGE
+        Projection:
+          ProjectionType: ALL
+      - IndexName: consumedIndex
+        KeySchema:
+        - AttributeName: topic
+          KeyType: HASH
+        - AttributeName: consumed
+          KeyType: RANGE
+        Projection:
+          ProjectionType: ALL
+      BillingMode: PAY_PER_REQUEST
 Outputs:
   CreateStudyRecordFunction:
     Description: CreateStudyRecord Lambda Function ARN
     Value:
       Fn::GetAtt:
       - CreateStudyRecordFunction
-      - Arn
-  GetStudyRecordsByIsConsumedFunction:
-    Description: GetStudyRecordsByIsConsumed Lambda Function ARN
-    Value:
-      Fn::GetAtt:
-      - GetStudyRecordsByIsConsumedFunction
       - Arn
   GetStudyRecordsByPeriodFunction:
     Description: GetStudyRecordsByPeriod Lambda Function ARN
@@ -33,60 +141,9 @@ Outputs:
       Fn::GetAtt:
       - GetStudyRecordsByTagFunction
       - Arn
-Resources:
-  CreateStudyRecordFunction:
-    Properties:
-      CodeUri: s3://aws-sam-fiap-deployt/896a140ec24d1c84f917b82d6bdddd3f
-      Events:
-        CreateStudyRecord:
-          Properties:
-            Method: post
-            Path: /study
-          Type: Api
-      Handler: br.com.iwe.handler.CreateStudyRecord::handleRequest
-      Runtime: java8
-    Type: AWS::Serverless::Function
   GetStudyRecordsByIsConsumedFunction:
-    Properties:
-      CodeUri: s3://aws-sam-fiap-deployt/896a140ec24d1c84f917b82d6bdddd3f
-      Events:
-        GetStudyRecordsByIsConsumed:
-          Properties:
-            Method: get
-            Path: /study/{topic}/findByIsConsumed
-            RequestParameters:
-            - method.request.querystring.isconsumed
-          Type: Api
-      Handler: br.com.iwe.handler.GetStudyRecordsByIsConsumed::handleRequest
-      Runtime: java8
-    Type: AWS::Serverless::Function
-  GetStudyRecordsByPeriodFunction:
-    Properties:
-      CodeUri: s3://aws-sam-fiap-deployt/896a140ec24d1c84f917b82d6bdddd3f
-      Events:
-        GetStudyRecordsByPeriod:
-          Properties:
-            Method: get
-            Path: /study/{topic}/findByPeriod
-            RequestParameters:
-            - method.request.querystring.starts
-            - method.request.querystring.ends
-          Type: Api
-      Handler: br.com.iwe.handler.GetStudyRecordsByPeriod::handleRequest
-      Runtime: java8
-    Type: AWS::Serverless::Function
-  GetStudyRecordsByTagFunction:
-    Properties:
-      CodeUri: s3://aws-sam-fiap-deployt/896a140ec24d1c84f917b82d6bdddd3f
-      Events:
-        GetStudyRecordsByTag:
-          Properties:
-            Method: get
-            Path: /study/{topic}/findByTag
-            RequestParameters:
-            - method.request.querystring.tag
-          Type: Api
-      Handler: br.com.iwe.handler.GetStudyRecordsByTag::handleRequest
-      Runtime: java8
-    Type: AWS::Serverless::Function
-Transform: AWS::Serverless-2016-10-31
+    Description: GetStudyRecordsByIsConsumed Lambda Function ARN
+    Value:
+      Fn::GetAtt:
+      - GetStudyRecordsByIsConsumedFunction
+      - Arn

@@ -18,7 +18,7 @@ Resources:
   CreateTripRecordFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://code-serverless-vinni/c430aa1744aa3d969a70643b951a8038
+      CodeUri: s3://code-serverless-vinni/014098c29ae916a5b088e375d5332fae
       Handler: br.com.iwe.handler.CreateTripRecord::handleRequest
       Runtime: java8
       Policies:
@@ -34,7 +34,7 @@ Resources:
   GetTripRecordsByCountry:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://code-serverless-vinni/c430aa1744aa3d969a70643b951a8038
+      CodeUri: s3://code-serverless-vinni/014098c29ae916a5b088e375d5332fae
       Handler: br.com.iwe.handler.GetTripRecordsByCountry::handleRequest
       Runtime: java8
       Policies:
@@ -50,7 +50,7 @@ Resources:
   GetTripRecordsByCityFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://code-serverless-vinni/c430aa1744aa3d969a70643b951a8038
+      CodeUri: s3://code-serverless-vinni/014098c29ae916a5b088e375d5332fae
       Handler: br.com.iwe.handler.GetTripRecordsByCity::handleRequest
       Runtime: java8
       Policies:

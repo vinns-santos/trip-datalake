@@ -17,17 +17,16 @@ public class GetTripRecordsByCountry implements RequestHandler<HandlerRequest, H
 	@Override
 	public HandlerResponse handleRequest(HandlerRequest request, Context context) {
 
-		final String topic = request.getPathParameters().get("topic");
-		final String tag = request.getQueryStringParameters().get("tag");
+		final String country = request.getPathParameters().get("country");
 
-		context.getLogger().log("Searching for registered studies for " + topic + " and tag equals " + tag);
+		context.getLogger().log("Searching for registered trips for " + country);
 
-		final List<Trip> studies = this.repository.findByTag(topic, tag);
+		final List<Trip> trips = this.repository.findByCountry(country);
 
-		if (studies == null || studies.isEmpty()) {
+		if (trips == null || trips.isEmpty()) {
 			return HandlerResponse.builder().setStatusCode(404).build();
 		}
 
-		return HandlerResponse.builder().setStatusCode(200).setObjectBody(studies).build();
+		return HandlerResponse.builder().setStatusCode(200).setObjectBody(trips).build();
 	}
 }

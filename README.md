@@ -1,13 +1,13 @@
-## AWS SAM Application for Managing Study Data Lake
+## AWS SAM Application for Managing Trip Data Lake
 
 This is a sample application to demonstrate how to build an application on AWS Serverless Envinronment using the
 AWS SAM, Amazon API Gateway, AWS Lambda and Amazon DynamoDB.
-It also uses the DynamoDBMapper ORM structure to map Study items in a DynamoDB table to a RESTful API for managing Studies.
+It also uses the DynamoDBMapper ORM structure to map Trip items in a DynamoDB table to a RESTful API for managing Trips.
 
 
 ## Requirements
 
-* AWS CLI already configured with at least PowerUser permission
+* [AWS CLI already configured with at least PowerUser permission](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html)
 * [Java SE Development Kit 8 installed](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 * [Docker installed](https://www.docker.com/community-edition)
 * [Maven](https://maven.apache.org/install.html)

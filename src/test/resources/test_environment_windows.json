@@ -1,18 +1,14 @@
 {
 	"CreateTripRecordFunction": {
-		"ENDPOINT_OVERRIDE": "http://172.18.111.81:8000",
+		"ENDPOINT_OVERRIDE": "http://docker.for.windows.localhost:8000",
 		"TABLE_NAME": "trip"
 	},
-	"GetTripRecordsByPeriodFunction": {
-		"ENDPOINT_OVERRIDE": "http://172.18.111.81:8000",
+	"GetTripRecordsByCountryFunction": {
+		"ENDPOINT_OVERRIDE": "http://docker.for.windows.localhost:8000",
 		"TABLE_NAME": "trip"
 	},
-	"GetTripRecordsByTagFunction": {
-		"ENDPOINT_OVERRIDE": "http://172.18.111.81:8000",
-		"TABLE_NAME": "trip"
-	},
-	"GetTripRecordsByIsConsumedFunction": {
-		"ENDPOINT_OVERRIDE": "http://172.18.111.81:8000",
+	"GetTripRecordsByCityFunction": {
+		"ENDPOINT_OVERRIDE": "http://docker.for.windows.localhost:8000",
 		"TABLE_NAME": "trip"
 	}
 }

@@ -31,61 +31,40 @@ Resources:
          Properties:
            Path: /trip
            Method: post
-           
-  GetStudyRecordsByPeriodFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-     CodeUri: target/study-datalake-1.0.0-SNAPSHOT-jar-with-dependencies.jar
-     Handler: br.com.iwe.handler.GetStudyRecordsByPeriod::handleRequest
-     Runtime: java8
-     Policies:
-       - DynamoDBCrudPolicy:
-           TableName: !Ref StudyTable     
-     Events:
-       GetStudyRecordsByPeriod:
-         Type: Api
-         Properties:
-           Path: /study/{topic}/findByPeriod
-           Method: get
-           RequestParameters:
-              - method.request.querystring.starts
-              - method.request.querystring.ends
-              
-  GetStudyRecordsByTagFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-     CodeUri: target/study-datalake-1.0.0-SNAPSHOT-jar-with-dependencies.jar
-     Handler: br.com.iwe.handler.GetStudyRecordsByTag::handleRequest
-     Runtime: java8
-     Policies:
-       - DynamoDBCrudPolicy:
-           TableName: !Ref StudyTable     
-     Events:
-       GetStudyRecordsByTag:
-         Type: Api
-         Properties:
-           Path: /study/{topic}/findByTag
-           Method: get
-           RequestParameters:
-              - method.request.querystring.tag
 
-  GetStudyRecordsByIsConsumedFunction:
+  GetTripRecordsByCountry:
     Type: AWS::Serverless::Function
     Properties:
-     CodeUri: target/study-datalake-1.0.0-SNAPSHOT-jar-with-dependencies.jar
-     Handler: br.com.iwe.handler.GetStudyRecordsByIsConsumed::handleRequest
+     CodeUri: target/trip-datalake-1.0.0-SNAPSHOT-jar-with-dependencies.jar
+     Handler: br.com.iwe.handler.GetTripRecordsByCountry::handleRequest
      Runtime: java8
      Policies:
        - DynamoDBCrudPolicy:
-           TableName: !Ref StudyTable
+           TableName: !Ref TripTable
      Events:
-       GetStudyRecordsByIsConsumed:
+       GetTripRecordsByCountry:
          Type: Api
          Properties:
-           Path: /study/{topic}/findByIsConsumed
+           Path: /trips/{country}/
+           Method: get
+
+  GetTripRecordsByCityFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+     CodeUri: target/trip-datalake-1.0.0-SNAPSHOT-jar-with-dependencies.jar
+     Handler: br.com.iwe.handler.GetTripRecordsByCity::handleRequest
+     Runtime: java8
+     Policies:
+       - DynamoDBCrudPolicy:
+           TableName: !Ref TripTable
+     Events:
+       GetTripRecordsByCity:
+         Type: Api
+         Properties:
+           Path: /trips/{country}/findbyCity
            Method: get
            RequestParameters:
-              - method.request.querystring.isconsumed
+              - method.request.querystring.city
               
   TripTable:
     Type: AWS::DynamoDB::Table
@@ -113,24 +92,13 @@ Resources:
             - AttributeName: city
               KeyType: RANGE
           Projection:
+             ProjectionType: ALL 
+        - IndexName: reasonIndex
+          KeySchema: 
+            - AttributeName: country
+              KeyType: HASH
+            - AttributeName: reason
+              KeyType: RANGE
+          Projection:
              ProjectionType: ALL
       BillingMode: PAY_PER_REQUEST              
-
-Outputs:
-
-    CreateTripRecordFunction:
-      Description: "CreateTripRecord Lambda Function ARN"
-      Value: !GetAtt CreateTripRecordFunction.Arn
-      
-    GetStudyRecordsByPeriodFunction:
-      Description: "GetStudyRecordsByPeriod Lambda Function ARN"
-      Value: !GetAtt GetStudyRecordsByPeriodFunction.Arn
-      
-    GetStudyRecordsByTagFunction:
-      Description: "GetStudyRecordsByTag Lambda Function ARN"
-      Value: !GetAtt GetStudyRecordsByTagFunction.Arn
-      
-    GetStudyRecordsByIsConsumedFunction:
-      Description: "GetStudyRecordsByIsConsumed Lambda Function ARN"
-      Value: !GetAtt GetStudyRecordsByIsConsumedFunction.Arn      
-     

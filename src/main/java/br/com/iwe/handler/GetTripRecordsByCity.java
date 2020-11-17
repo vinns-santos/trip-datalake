@@ -10,19 +10,19 @@ import br.com.iwe.model.HandlerRequest;
 import br.com.iwe.model.HandlerResponse;
 import br.com.iwe.model.Trip;
 
-public class GetStudyRecordsByIsConsumed implements RequestHandler<HandlerRequest, HandlerResponse> {
+public class GetTripRecordsByCity implements RequestHandler<HandlerRequest, HandlerResponse> {
 
 	private final TripRepository repository = new TripRepository();
 
 	@Override
 	public HandlerResponse handleRequest(HandlerRequest request, Context context) {
 
-		final String topic = request.getPathParameters().get("topic");
-		final String isConsumed = request.getQueryStringParameters().get("isconsumed");
+		final String country = request.getPathParameters().get("country");
+		final String city = request.getQueryStringParameters().get("city");
 
 		context.getLogger()
-				.log("Searching for registered studies for " + topic + " thas is Consumed equals " + isConsumed);
-		final List<Trip> studies = this.repository.findByIsConsumed(topic, isConsumed);
+				.log("Searching for registered trips for " + country + " that went like " + city);
+		final List<Trip> studies = this.repository.findByCity(country, city);
 
 		if (studies == null || studies.isEmpty()) {
 			return HandlerResponse.builder().setStatusCode(404).build();

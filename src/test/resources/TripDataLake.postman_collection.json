@@ -6,37 +6,6 @@
 	},
 	"item": [
 		{
-			"name": "findByPeriod",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:3000/trips/devops/findByPeriod?starts=2015-02-01&ends=2015-08-09",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"trips",
-						"devops",
-						"findByPeriod"
-					],
-					"query": [
-						{
-							"key": "starts",
-							"value": "2015-02-01"
-						},
-						{
-							"key": "ends",
-							"value": "2015-08-09"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "createTripRecord",
 			"request": {
 				"method": "POST",
@@ -50,29 +19,29 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"topic\": null,\n    \"dateTimeCreation\": null,\n    \"tag\": null,\n    \"url\": null,\n    \"description\": null,\n    \"consumed\": null\n}"
+					"raw": "{\n    \"country\": null,\n    \"date\": null,\n    \"city\": null,\n    \"reason\": null\n}"
 				},
 				"url": {
-					"raw": "http://localhost:3000/trips",
+					"raw": "http://localhost:3000/trip",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "3000",
 					"path": [
-						"trips"
+						"trip"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "findByTag",
+			"name": "findByCountry",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/trips/devops/findByTag?tag=codePipeline",
+					"raw": "http://localhost:3000/trips/brasil/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -80,26 +49,19 @@
 					"port": "3000",
 					"path": [
 						"trips",
-						"devops",
-						"findByTag"
-					],
-					"query": [
-						{
-							"key": "tag",
-							"value": "codePipeline"
-						}
+						"brasil"
 					]
 				}
 			},
 			"response": []
-		},
+		},		
 		{
-			"name": "findByIsConsumed",
+			"name": "findbyCity",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/trips/devops/findByIsConsumed?isconsumed=false",
+					"raw": "http://localhost:3000/trips/brasil/findbyCity?city=rio",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -107,13 +69,13 @@
 					"port": "3000",
 					"path": [
 						"trips",
-						"devops",
-						"findByIsConsumed"
+						"brasil",
+						"findbyCity"
 					],
 					"query": [
 						{
-							"key": "isconsumed",
-							"value": "false"
+							"key": "city",
+							"value": "rio"
 						}
 					]
 				}

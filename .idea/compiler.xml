@@ -7,10 +7,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="study-datalake" />
+        <module name="trip-datalake" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="study-datalake" target="1.8" />
+      <module name="trip-datalake" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

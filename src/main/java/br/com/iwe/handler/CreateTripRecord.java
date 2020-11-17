@@ -24,7 +24,7 @@ public class CreateTripRecord implements RequestHandler<HandlerRequest, HandlerR
 		} catch (IOException e) {
 			return HandlerResponse.builder().setStatusCode(400).setRawBody("There is a error in your Trip!").build();
 		}
-		context.getLogger().log("Creating a new trip record for the topic " + trip.getTopic());
+		context.getLogger().log("Creating a new trip record for the country " + trip.getCountry());
 		final Trip tripRecorded = repository.save(trip);
 		return HandlerResponse.builder().setStatusCode(201).setObjectBody(tripRecorded).build();
 	}

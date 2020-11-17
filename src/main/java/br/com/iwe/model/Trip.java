@@ -6,85 +6,61 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBIndexRangeKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
-@DynamoDBTable(tableName = "study")
-public class Study {
+@DynamoDBTable(tableName = "trip")
+public class Trip {
 
-	@DynamoDBHashKey(attributeName = "topic")
-	private String topic;
-	@DynamoDBRangeKey(attributeName = "dateTimeCreation")
-	private String dateTimeCreation;
+	@DynamoDBHashKey(attributeName = "country")
+	private String country;
+	@DynamoDBRangeKey(attributeName = "date")
+	private String date;
 
-	@DynamoDBIndexRangeKey(attributeName = "tag", localSecondaryIndexName = "tagIndex")
-	private String tag;
+	@DynamoDBIndexRangeKey(attributeName = "city", localSecondaryIndexName = "cityIndex")
+	private String city;
 
-	@DynamoDBAttribute(attributeName = "url")
-	private String url;
-	@DynamoDBAttribute(attributeName = "description")
-	private String description;
+	@DynamoDBAttribute(attributeName = "reason")
+	private String reason;
 
-	@DynamoDBIndexRangeKey(attributeName = "consumed", localSecondaryIndexName = "consumedIndex")
-	private String consumed;
-
-	public Study(String topic, String dateTimeCreation, String tag, String url, String description, String consumed) {
+	public Trip(String country, String date, String city, String reason) {
 		super();
-		this.topic = topic;
-		this.dateTimeCreation = dateTimeCreation;
-		this.tag = tag;
-		this.url = url;
-		this.description = description;
-		this.consumed = consumed;
+		this.country = country;
+		this.date = date;
+		this.city = city;
+		this.reason = reason;
 	}
 
-	public Study() {
+	public Trip() {
 		super();
 	}
 
-	public String getTopic() {
-		return topic;
+	public String getCountry() {
+		return country;
 	}
 
-	public void setTopic(String topic) {
-		this.topic = topic;
+	public void setCountry(String country) {
+		this.country = country;
 	}
 
-	public String getDateTimeCreation() {
-		return dateTimeCreation;
+	public String getDate() {
+		return date;
 	}
 
-	public void setDateTimeCreation(String dateTimeCreation) {
-		this.dateTimeCreation = dateTimeCreation;
+	public void setDate(String date) {
+		this.date = date;
 	}
 
-	public String getTag() {
-		return tag;
+	public String getCity() {
+		return city;
 	}
 
-	public void setTag(String tag) {
-		this.tag = tag;
+	public void setCity(String city) {
+		this.city = city;
 	}
 
-	public String getUrl() {
-		return url;
+	public String getReason() {
+		return reason;
 	}
 
-	public void setUrl(String url) {
-		this.url = url;
+	public void setReason(String reason) {
+		this.reason = reason;
 	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public String getConsumed() {
-		return consumed;
-	}
-
-	public void setConsumed(String consumed) {
-		this.consumed = consumed;
-	}
-
 }

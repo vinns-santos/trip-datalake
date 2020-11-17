@@ -85,8 +85,12 @@ sam deploy \
 
 After deployment is complete you can do this following steps to retrieve the API Gateway Endpoint URL:
 
+You can go directly by this URL: https://console.aws.amazon.com/lambda/home?region=YOUR_REGION#/applications/trip-datalake
+or
+
 1. Go to Console and enter in the Lambda Service
 2. Select the 'Applications' link in the side bar menu
 3. Now choose our 'trip-datalake'
 4. Finally, look for the Endpoint  
- 
+
+You can go directly by this URL: https://console.aws.amazon.com/lambda/home?region=YOUR_REGION#/applications/trip-datalake
